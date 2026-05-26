@@ -1,21 +1,58 @@
-# Frank 2.0 – Public Policy Documents
+# FrankAI Site
 
-This repository contains the required public documents for publishing the Frank 2.0 API Actions with OpenAI's GPT platform.
+First-party website replacement for `frankai.online`.
 
-## Included
+## Purpose
 
-- `frank_privacy_policy.md` – Privacy practices and data handling
-- `frank_terms_of_service.md` – Use agreement, licensing, and jurisdiction terms
+This application replaces the generated Base44 landing page with an owned FrankAI site:
 
-These files can be hosted via GitHub Pages or served directly from this repo.
+- One clear FrankAI identity with separate user, client and partner pathways.
+- First-party assets and routes only.
+- Real product proof through the deployed ServiceDesk and integration foundation.
+- Privacy, terms, contact and start pages required for an owned public presence.
 
-## Hosting Guide
+## Local runtime
 
-1. Clone this repo
-2. Push to your GitHub account
-3. Enable GitHub Pages under repo settings
-4. Replace your OpenAPI `x-privacyPolicyUrl` with the direct link to the hosted markdown
+```bash
+npm install
+npm run lint
+npm run build
+npm run dev
+```
 
----
+The staged production service runs on localhost port `4300`.
 
-Frank 2.0 is built for sovereignty, transparency, and trust.
+## Production build
+
+The `systemd` deployment runs Next.js standalone output. After each production build, copy
+the static and public assets into the standalone directory before restarting:
+
+```bash
+npm run build
+mkdir -p .next/standalone/.next .next/standalone/public
+cp -a .next/static .next/standalone/.next/
+cp -a public/. .next/standalone/public/
+systemctl restart frankai-site.service
+```
+
+## Deployment state
+
+The first-party replacement was published on 26 May 2026:
+
+- `https://frankai.online` and `https://www.frankai.online` resolve to the VPS and proxy
+  through Caddy to `127.0.0.1:4300`.
+- `https://preview.frankai.online` remains available as the verified preview route.
+- Public route, asset, security header and TLS validation passed after cutover.
+
+Remaining external cleanup: disconnect or delete the retired Base44 project/domain association
+from the Base44 account if account access is retained.
+
+`servicedesk.frankai.online` and `openwa.frankai.online` are independent existing services and
+must remain unchanged during the landing-site cutover.
+
+## Repository history
+
+The `kuhnseelmee/Frank-2.0` repository previously published standalone API policy documents
+through GitHub Pages. The files `frank_privacy_policy.md`, `frank_terms_of_service.md` and
+`_config.yml` are retained in that repository for historical link continuity; they are not the
+implementation of this website. Website notices are served from `/privacy` and `/terms`.

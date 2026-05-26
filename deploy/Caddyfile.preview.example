@@ -1,0 +1,11 @@
+# Apply after preview.frankai.online resolves to this VPS.
+preview.frankai.online {
+	encode gzip zstd
+	reverse_proxy 127.0.0.1:4300
+}
+
+# Production hostnames applied after final DNS cutover.
+frankai.online, www.frankai.online {
+	encode gzip zstd
+	reverse_proxy 127.0.0.1:4300
+}
